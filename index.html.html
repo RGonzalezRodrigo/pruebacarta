@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta Digital — Piloto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1F2A20;
+    --paper:#EFE9D8;
+    --paper-soft:#F6F2E7;
+    --gold:#B8862E;
+    --olive:#4B5A3C;
+    --line:rgba(31,42,32,0.18);
+    --muted:#6B7360;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    font-family:'Public Sans', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    padding:0 0 60px 0;
+  }
+  .wrap{
+    max-width:520px;
+    margin:0 auto;
+    background:var(--paper);
+    min-height:100vh;
+    position:relative;
+  }
+  header.hero{
+    background:var(--ink);
+    color:var(--paper-soft);
+    padding:48px 28px 40px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:14px;
+    background:
+      repeating-linear-gradient(115deg, var(--paper) 0 10px, transparent 10px 20px);
+    opacity:0.9;
+  }
+  .kicker{
+    font-size:12.5px;
+    letter-spacing:.14em;
+    color:var(--gold);
+    margin:0 0 10px;
+    font-weight:500;
+  }
+  h1.restaurant-name{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:500;
+    font-size:clamp(32px, 8vw, 44px);
+    line-height:1.05;
+    margin:0 0 12px;
+    letter-spacing:-0.01em;
+  }
+  .tagline{
+    font-size:14.5px;
+    color:#C9CFC1;
+    max-width:320px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+  main{
+    padding:36px 28px 20px;
+  }
+  section.category{
+    margin-bottom:34px;
+  }
+  section.category:last-child{
+    margin-bottom:0;
+  }
+  h2.category-name{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:21px;
+    color:var(--olive);
+    margin:0 0 4px;
+  }
+  .category-note{
+    font-size:13px;
+    color:var(--muted);
+    margin:0 0 18px;
+    font-style:italic;
+  }
+  .item{
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  section.category .item:last-child{
+    border-bottom:none;
+  }
+  .item-row{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .item-name{
+    font-weight:600;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .leader{
+    flex:1;
+    border-bottom:1.5px dotted var(--line);
+    transform:translateY(-3px);
+    min-width:12px;
+  }
+  .item-price{
+    font-weight:600;
+    font-size:15px;
+    color:var(--gold);
+    white-space:nowrap;
+  }
+  .item-desc{
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.5;
+    margin-top:4px;
+    max-width:92%;
+  }
+  .badge{
+    display:inline-block;
+    font-size:10.5px;
+    padding:2px 7px;
+    border-radius:3px;
+    background:var(--olive);
+    color:var(--paper-soft);
+    margin-left:8px;
+    font-weight:500;
+    vertical-align:middle;
+    transform:translateY(-1px);
+  }
+  footer.actions{
+    padding:8px 28px 36px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .action-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px;
+    border-radius:2px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14.5px;
+    border:1.5px solid var(--ink);
+    color:var(--ink);
+    transition:background .15s ease, color .15s ease;
+  }
+  .action-btn.primary{
+    background:var(--ink);
+    color:var(--paper-soft);
+  }
+  .action-btn:active{
+    opacity:0.75;
+  }
+  .status{
+    text-align:center;
+    font-size:12px;
+    color:var(--muted);
+    padding:18px 28px 0;
+  }
+  .status.error{ color:#9A3B2E; }
+  @media (max-width:400px){
+    header.hero{ padding:40px 20px 32px; }
+    main{ padding:30px 20px 10px; }
+    footer.actions{ padding:8px 20px 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="kicker">CARTA DIGITAL</p>
+    <h1 class="restaurant-name" id="restaurantName">Almacén del Puerto</h1>
+    <p class="tagline" id="restaurantTagline">Cocina de río y monte — Paraná, Entre Ríos</p>
+  </header>
+
+  <main id="menuContainer">
+    <!-- El menú se genera acá con JS -->
+  </main>
+
+  <p class="status" id="loadStatus"></p>
+
+  <footer class="actions">
+    <a class="action-btn primary" href="#" id="btnPuntos">Sumar puntos de esta visita</a>
+    <a class="action-btn" href="#" id="btnWhatsapp">Consultar por WhatsApp</a>
+    <a class="action-btn" href="#" id="btnInsta">Ver Instagram</a>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN DEL PILOTO
+   ============================================================
+   1) Para conectar con una Google Sheet real:
+      - Archivo > Compartir > Publicar en la web > formato CSV
+      - Pegá esa URL acá abajo en SHEET_CSV_URL
+      - La hoja debe tener columnas: categoria, nota_categoria, item, descripcion, precio, destacado
+
+   2) Mientras tanto, usa los datos de ejemplo (FALLBACK_DATA) para
+      que puedas ver cómo queda antes de conectar la planilla real.
+   ============================================================ */
+
+const SHEET_CSV_URL = ""; // <-- pegar acá la URL "publicar en la web" en CSV
+
+const CONFIG = {
+  nombre: "Almacén del Puerto",
+  tagline: "Cocina de río y monte — Paraná, Entre Ríos",
+  whatsapp: "https://wa.me/5493430000000",
+  instagram: "https://instagram.com/almacendelpuerto",
+  linkPuntos: "https://forms.gle/ejemplo-puntos"
+};
+
+const FALLBACK_DATA = [
+  { categoria: "Para empezar", nota_categoria: "Ideal para compartir", item: "Empanadas de carne al cuchillo", descripcion: "Tres unidades, horneadas, salsa criolla casera", precio: "3200", destacado: "" },
+  { categoria: "Para empezar", nota_categoria: "", item: "Provoleta a la parrilla", descripcion: "Con orégano y un hilo de miel de monte", precio: "4800", destacado: "recomendado" },
+  { categoria: "Del río", nota_categoria: "Pesca del día, según disponibilidad", item: "Surubí a la parrilla", descripcion: "Con ensalada de estación y limón", precio: "9800", destacado: "" },
+  { categoria: "Del río", nota_categoria: "", item: "Milanesa de pacú", descripcion: "Con puré rústico de papa y batata", precio: "8600", destacado: "" },
+  { categoria: "De la brasa", nota_categoria: "", item: "Asado de tira", descripcion: "500g, guarnición a elección", precio: "11500", destacado: "recomendado" },
+  { categoria: "De la brasa", nota_categoria: "", item: "Costillar de cerdo", descripcion: "Marinado 24hs, salsa de mostaza y miel", precio: "10200", destacado: "" },
+  { categoria: "Para el final", nota_categoria: "", item: "Chajá casero", descripcion: "Merengue, crema y duraznos", precio: "3400", destacado: "" },
+  { categoria: "Para el final", nota_categoria: "", item: "Flan de mandarina", descripcion: "Con dulce de leche del litoral", precio: "3100", destacado: "" },
+  { categoria: "Bebidas", nota_categoria: "", item: "Vino de la casa (copa)", descripcion: "Tannat de la región", precio: "2600", destacado: "" },
+  { categoria: "Bebidas", nota_categoria: "", item: "Limonada con yerba", descripcion: "Receta propia, sin alcohol", precio: "1900", destacado: "" }
+];
+
+function parseCSV(text){
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",").map(h => h.trim());
+  return lines.slice(1).map(line => {
+    // split simple respetando comillas
+    const values = line.match(/(".*?"|[^",]+)(?=,|$)/g) || [];
+    const row = {};
+    headers.forEach((h, i) => {
+      let v = (values[i] || "").trim();
+      if (v.startsWith('"') && v.endsWith('"')) v = v.slice(1, -1);
+      row[h] = v;
+    });
+    return row;
+  });
+}
+
+function formatPrice(p){
+  const n = parseInt(String(p).replace(/[^\d]/g, ""), 10);
+  if (isNaN(n)) return p;
+  return "$" + n.toLocaleString("es-AR");
+}
+
+function renderMenu(data){
+  const container = document.getElementById("menuContainer");
+  container.innerHTML = "";
+
+  const categorias = [];
+  data.forEach(row => {
+    if (!categorias.includes(row.categoria)) categorias.push(row.categoria);
+  });
+
+  categorias.forEach(cat => {
+    const items = data.filter(r => r.categoria === cat);
+    if (items.length === 0) return;
+
+    const section = document.createElement("section");
+    section.className = "category";
+
+    const h2 = document.createElement("h2");
+    h2.className = "category-name";
+    h2.textContent = cat;
+    section.appendChild(h2);
+
+    const nota = items[0].nota_categoria;
+    if (nota) {
+      const p = document.createElement("p");
+      p.className = "category-note";
+      p.textContent = nota;
+      section.appendChild(p);
+    }
+
+    items.forEach(it => {
+      const div = document.createElement("div");
+      div.className = "item";
+
+      const row = document.createElement("div");
+      row.className = "item-row";
+
+      const name = document.createElement("span");
+      name.className = "item-name";
+      name.textContent = it.item;
+      row.appendChild(name);
+
+      if (it.destacado && it.destacado.trim()) {
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = "Recomendado";
+        row.appendChild(badge);
+      }
+
+      const leader = document.createElement("span");
+      leader.className = "leader";
+      row.appendChild(leader);
+
+      const price = document.createElement("span");
+      price.className = "item-price";
+      price.textContent = formatPrice(it.precio);
+      row.appendChild(price);
+
+      div.appendChild(row);
+
+      if (it.descripcion) {
+        const desc = document.createElement("p");
+        desc.className = "item-desc";
+        desc.textContent = it.descripcion;
+        div.appendChild(desc);
+      }
+
+      section.appendChild(div);
+    });
+
+    container.appendChild(section);
+  });
+}
+
+function applyConfig(){
+  document.getElementById("restaurantName").textContent = CONFIG.nombre;
+  document.getElementById("restaurantTagline").textContent = CONFIG.tagline;
+  document.getElementById("btnWhatsapp").href = CONFIG.whatsapp;
+  document.getElementById("btnInsta").href = CONFIG.instagram;
+  document.getElementById("btnPuntos").href = CONFIG.linkPuntos;
+}
+
+async function init(){
+  applyConfig();
+  const status = document.getElementById("loadStatus");
+
+  if (!SHEET_CSV_URL) {
+    renderMenu(FALLBACK_DATA);
+    status.textContent = "Mostrando datos de ejemplo — todavía no hay planilla conectada.";
+    return;
+  }
+
+  try {
+    status.textContent = "Cargando carta...";
+    const res = await fetch(SHEET_CSV_URL);
+    if (!res.ok) throw new Error("No se pudo leer la planilla");
+    const text = await res.text();
+    const data = parseCSV(text);
+    renderMenu(data);
+    status.textContent = "";
+  } catch (err) {
+    renderMenu(FALLBACK_DATA);
+    status.textContent = "No se pudo conectar con la planilla, mostrando ejemplo.";
+    status.classList.add("error");
+  }
+}
+
+init();
+</script>
+</body>
+</html>
